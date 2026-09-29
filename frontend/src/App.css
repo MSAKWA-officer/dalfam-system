@@ -1,0 +1,9 @@
+/* App-level styles (component-specific overrides beyond Tailwind utilities go here) */
+
+.dalfam-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.dalfam-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #c9a24b;
+  border-radius: 9999px;
+}
