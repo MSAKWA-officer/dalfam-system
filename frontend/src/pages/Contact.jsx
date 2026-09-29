@@ -45,7 +45,7 @@ export default function Contact() {
       // that endpoint is added. Until then it will fail and fall back to
       // the "error" message below with a mailto/WhatsApp suggestion.
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/contact`,
+        `${import.meta.env.VITE_API_URL || 'https://api.dalfam.co.tz/api'}/contact`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

@@ -12,14 +12,19 @@ export const formatDate = (dateStr) => {
   return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 };
 
-// NEW: turns a relative path like "/uploads/blog/xxx.jpg" (returned by the API)
+// Turns a relative path like "/uploads/blog/xxx.jpg" (returned by the API)
 // into a full URL pointing at the backend server, e.g.
-// "http://localhost:5000/uploads/blog/xxx.jpg". Falls back to a placeholder
+// "https://api.dalfam.co.tz/uploads/blog/xxx.jpg". Falls back to a placeholder
 // when the post has no image yet.
+//
+// NOTE: the fallback below (after ||) only kicks in if VITE_API_URL is
+// missing at build time. It's set to the live API so images don't silently
+// break in production — but the real fix is making sure VITE_API_URL is
+// actually embedded during `npm run build`.
 export const getAssetUrl = (relativePath) => {
   if (!relativePath) return null;
   if (/^https?:\/\//i.test(relativePath)) return relativePath;
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const apiUrl = import.meta.env.VITE_API_URL || 'https://api.dalfam.co.tz/api';
   const origin = apiUrl.replace(/\/api\/?$/, '');
   return `${origin}${relativePath}`;
 };

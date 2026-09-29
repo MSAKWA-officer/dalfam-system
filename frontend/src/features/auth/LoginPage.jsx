@@ -53,12 +53,7 @@ const Login = () => {
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-        <p className="text-center text-sm text-gray-500 mt-6">
-          First time setting up the system?{' '}
-          <Link to="/register" className="text-dalfam-green font-medium hover:underline">
-            Create the admin account
-          </Link>
-        </p>
+      
       </div>
     </div>
   );
