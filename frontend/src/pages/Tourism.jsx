@@ -25,7 +25,7 @@ const EXPERIENCES = [
   },
   {
     title: 'Farm Stays',
-    image: '/images/experience-farmstay.jpg',
+    image: '/images/water.jpg',
     text: 'Stay close to DALFAM\'s own farms and see Tanzanian livestock production up close, alongside your travel itinerary.',
   },
 ];
@@ -124,7 +124,7 @@ const TOURISM_FAQS = [
 const TOURISM_OFFICE_LOCATION = {
   name: 'Tourism Office',
   address: 'Arusha, Tanzania',
-  phone: '+255 XXX XXX XXX',
+  phone: '+255 718 258 199',
 };
 const COMPANY_EMAIL = 'info@dalfam.co.tz';
 
@@ -237,96 +237,118 @@ export default function Tourism() {
   return (
     <div className="min-h-screen bg-dalfam-cream">
       <Navbar active="Tourism" />
+{/* Page hero */}
+<section className="relative text-white overflow-hidden min-h-[350px] md:min-h-[430px]">
+  {/* Image only: no overlay, no tint, no opacity */}
+  <img
+    src={heroImage}
+    alt="DALFAM Tourism"
+  className="absolute inset-0 w-full h-full object-cover object-[center_65%]"
+  />
 
-      {/* Page hero */}
-      <section
-        className="relative text-white bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
+  <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 text-center">
+    <h1
+      className="font-serif font-bold text-4xl sm:text-5xl"
+      style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}
+    >
+      DALFAM Tourism
+    </h1>
+    <p
+      className="mt-5 text-lg text-white max-w-2xl mx-auto"
+      style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}
+    >
+      Curated Tanzanian travel experiences connecting visitors with nature, culture, and local communities.
+    </p>
+  </div>
+</section>
+
+     {/* Experiences */}
+<section className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-10 text-center">
+    Experiences We Offer
+  </h2>
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full">
+    {EXPERIENCES.map((e) => (
+      <div
+        key={e.title}
+        className="bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col w-full"
       >
-        {/* Dark overlay so the heading/text stay readable over the photo */}
+        {/* Square image */}
+        <div className="aspect-square w-full">
+          <ImageWithFallback
+            src={e.image}
+            alt={e.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="p-6 flex flex-col flex-1">
+          <h3 className="font-serif text-lg font-bold text-dalfam-green mb-2">
+            {e.title}
+          </h3>
+          <p className="text-black text-sm leading-relaxed">{e.text}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+{/* Tourism stats */}
+<section className="bg-dalfam-green text-white">
+  <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    {TOURISM_STATS.map((d) => (
+      <div key={d.label}>
+        <p className="font-serif text-3xl md:text-4xl font-bold text-dalfam-gold">
+          {d.value}
+        </p>
+        <p className="mt-1 text-xs md:text-sm tracking-wide text-gray-200">
+          {d.label}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
+     {/* Packages (marketing overview) */}
+<section className="bg-white border-y border-gray-200">
+  <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-10 text-center">
+      Travel Packages
+    </h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full">
+      {PACKAGES.map((p) => (
         <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(180deg, rgba(18,36,31,0.75) 0%, rgba(47,74,60,0.75) 100%)',
-          }}
-        />
-        <div className="relative max-w-5xl mx-auto px-6 py-20 text-center">
-          <h1 className="font-serif font-bold text-4xl sm:text-5xl">DALFAM Tourism</h1>
-          <p className="mt-5 text-lg text-gray-200 max-w-2xl mx-auto">
-            Curated travel experiences that connect visitors with Tanzania's
-            nature, culture and communities — designed and hosted by people
-            who know the land.
-          </p>
-        </div>
-      </section>
+          key={p.name}
+          className="rounded-lg border border-gray-200 overflow-hidden flex flex-col w-full bg-white"
+        >
+          {/* Square image */}
+          <div className="aspect-square w-full">
+            <ImageWithFallback
+              src={p.image}
+              alt={p.name}
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-      {/* Experiences */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-10 text-center">
-          Experiences We Offer
-        </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {EXPERIENCES.map((e) => (
-            <div key={e.title} className="bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col">
-              <ImageWithFallback src={e.image} alt={e.title} className="w-full h-44" />
-              <div className="p-6 flex flex-col flex-1">
-                <h3 className="font-serif text-lg font-bold text-dalfam-green mb-2">
-                  {e.title}
-                </h3>
-                <p className="text-black text-sm leading-relaxed">{e.text}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Tourism stats */}
-      <section className="bg-dalfam-green text-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {TOURISM_STATS.map((d) => (
-            <div key={d.label}>
-              <p className="font-serif text-3xl md:text-4xl font-bold text-dalfam-gold">
-                {d.value}
-              </p>
-              <p className="mt-1 text-xs md:text-sm tracking-wide text-gray-200">
-                {d.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Packages (marketing overview) */}
-      <section className="bg-white border-y border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-          <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-10 text-center">
-            Travel Packages
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {PACKAGES.map((p) => (
-              <div key={p.name} className="rounded-lg border border-gray-200 overflow-hidden flex flex-col">
-                <ImageWithFallback src={p.image} alt={p.name} className="w-full h-44" />
-                <div className="p-6 flex flex-col flex-1">
-                  <h3 className="font-serif text-lg font-bold text-dalfam-dark mb-1">
-                    {p.name}
-                  </h3>
-                  <span className="text-xs tracking-widest text-dalfam-gold font-semibold mb-3">
-                    {p.duration}
-                  </span>
-                  <p className="text-black text-sm leading-relaxed flex-1">{p.text}</p>
-                  <Link
-                    to="/contact"
-                    className="inline-block mt-5 text-dalfam-green font-medium hover:text-dalfam-gold transition-colors"
-                  >
-                    Enquire →
-                  </Link>
-                </div>
-              </div>
-            ))}
+          <div className="p-6 flex flex-col flex-1">
+            <h3 className="font-serif text-lg font-bold text-dalfam-dark mb-1">
+              {p.name}
+            </h3>
+            <span className="text-xs tracking-widest text-dalfam-gold font-semibold mb-3">
+              {p.duration}
+            </span>
+            <p className="text-black text-sm leading-relaxed flex-1">{p.text}</p>
+            <Link
+              to="/contact"
+              className="inline-block mt-5 text-dalfam-green font-medium hover:text-dalfam-gold transition-colors"
+            >
+              Enquire →
+            </Link>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Available Tour Packages — live data + photos uploaded by the admin */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
@@ -407,16 +429,28 @@ export default function Tourism() {
                   <p className="text-sm font-semibold text-dalfam-dark mt-1">
                     {formatCurrency(tour.price)}
                   </p>
+                  <Link
+                    to={`/book?package=${tour.id}`}
+                    className="mt-4 block text-center px-4 py-2 rounded-md bg-dalfam-green text-white text-sm font-semibold hover:bg-dalfam-dark transition-colors"
+                  >
+                    Book This Tour
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        <div className="text-center mt-10">
+        <div className="text-center mt-10 flex flex-wrap justify-center gap-3">
+          <Link
+            to="/book"
+            className="inline-block px-6 py-3 rounded-md bg-dalfam-gold text-dalfam-dark font-semibold hover:bg-yellow-500 transition-colors"
+          >
+            Book Online
+          </Link>
           <Link
             to="/contact"
-            className="inline-block px-6 py-3 rounded-md bg-dalfam-gold text-dalfam-dark font-semibold hover:bg-yellow-500 transition-colors"
+            className="inline-block px-6 py-3 rounded-md border border-dalfam-green text-dalfam-green font-semibold hover:bg-dalfam-green hover:text-white transition-colors"
           >
             Enquire About Availability
           </Link>
@@ -452,26 +486,48 @@ export default function Tourism() {
       </section>
 
       {/* Gallery */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-3 text-center">
-          Moments From The Road
-        </h2>
-        <p className="text-black text-center max-w-2xl mx-auto mb-12">
-          A look at past tours, destinations and the guests we've hosted
-          across Tanzania.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {TOURISM_GALLERY.map((g) => (
-            <ImageWithFallback
-              key={g.src}
-              src={g.src}
-              alt={g.alt}
-              className="w-full h-52 rounded-lg"
-            />
-          ))}
-        </div>
-      </section>
+<section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+  <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-3 text-center">
+    Moments From The Road
+  </h2>
+  <p className="text-black text-center max-w-2xl mx-auto mb-12">
+    A look at past tours, destinations and the guests we've hosted
+    across Tanzania.
+  </p>
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    {TOURISM_GALLERY.map((g, i) => {
+      // Hardcoded titles, matched to images by position
+      const title = [
+        'Safari Adventures',
+        'Scenic Destinations',
+        'Our Happy Guests',
+      ][i] || g.alt;
 
+      return (
+        <figure
+          key={g.src}
+          className="rounded-lg border border-gray-200 overflow-hidden bg-white"
+        >
+          {/* Square image */}
+          <div className="aspect-square w-full">
+            <ImageWithFallback
+              src={g.src}
+              alt={g.alt || title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Hardcoded title */}
+          <figcaption className="px-3 py-3 text-center border-t border-gray-200">
+            <span className="block font-serif text-sm md:text-base font-semibold text-dalfam-dark leading-snug">
+              {title}
+            </span>
+          </figcaption>
+        </figure>
+      );
+    })}
+  </div>
+</section>
       {/* Testimonials */}
       <section className="bg-dalfam-dark text-white">
         <div className="max-w-6xl mx-auto px-6 lg:px-10 py-16">
@@ -549,9 +605,7 @@ export default function Tourism() {
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              A Tanzanian enterprise building productive livestock systems and
-              memorable travel experiences — two industries, one standard of
-              quality.
+             A Tanzanian enterprise delivering quality livestock solutions and memorable travel experiences.
             </p>
           </div>
 
@@ -634,7 +688,7 @@ export default function Tourism() {
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-gray-400 text-center sm:text-left">
-              © {new Date().getFullYear()} DALFAM Company Ltd. Haki zote zimehifadhiwa.
+              © {new Date().getFullYear()} DALFAM Company Ltd. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               {SOCIAL_LINKS.map((s) => (

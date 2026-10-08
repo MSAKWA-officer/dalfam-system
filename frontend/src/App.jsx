@@ -11,6 +11,7 @@ import PigBreeding from './pages/PigBreeding';
 import Tourism from './pages/Tourism';
 import Blog from './pages/Blog';
 import Contact from './pages/Contact';
+import BookOnline from './pages/BookOnline'; // NEW: public online booking
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -36,6 +37,7 @@ function App() {
        <Route path="/tourism" element={<Tourism />} />
        <Route path="/blog" element={<Blog />} />
        <Route path="/contact" element={<Contact />} />
+       <Route path="/book" element={<BookOnline />} /> {/* NEW: /book */}
        
 
       {/* System (mfumo) */}

@@ -48,8 +48,21 @@ const Booking = sequelize.define('Booking', {
     type: DataTypes.TEXT,
     allowNull: true,
   },
+  // NEW: short code shown to online customers (e.g. DAL-261007-K7M2) so they
+  // can quote it and track their booking. Null for older/admin-created rows.
+  reference: {
+    type: DataTypes.STRING(20),
+    allowNull: true,
+  },
+  // NEW: where the booking came from — 'online' = public website form,
+  // 'admin' = created by staff inside the system.
+  source: {
+    type: DataTypes.ENUM('admin', 'online'),
+    defaultValue: 'admin',
+  },
 }, {
   tableName: 'bookings',
+  indexes: [{ name: 'bookings_reference_unique', unique: true, fields: ['reference'] }],
 });
 
 module.exports = Booking;

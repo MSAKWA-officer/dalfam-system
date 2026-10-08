@@ -11,11 +11,11 @@ const SERVICES = [
   },
   {
     title: 'Herd Development',
-    text: 'Support for farmers building a herd from scratch — starter stock, housing guidance and planning.',
+    text: 'Support for farmers building a herd from scratch starter stock, housing guidance and planning.',
   },
   {
     title: 'Biosecurity',
-    text: 'Disease-prevention practices that protect your investment and keep herds healthy year-round.',
+    text: 'Disease prevention practices that protect your investment and keep herds healthy year-round.',
   },
   {
     title: 'Production Support',
@@ -53,9 +53,9 @@ const BREEDING_STATS = [
 
 // Certifications and licenses relevant to the breeding business.
 const BREEDING_CERTIFICATIONS = [
-  'Livestock Breeding License — Ministry of Livestock and Fisheries',
-  'Registered Company — Tanzania Business Registration and Licensing Agency (BRELA)',
-  'Member — Tanzania Pig Farmers Association',
+  'Livestock Breeding License : Ministry of Livestock and Fisheries',
+  'Registered Company : Tanzania Business Registration and Licensing Agency (BRELA)',
+  'Member : Tanzania Pig Farmers Association',
   'Certified Biosecurity Standards Compliance',
 ];
 
@@ -81,7 +81,7 @@ const BREEDING_TESTIMONIALS = [
     role: 'Pig Farmer, Iringa',
   },
   {
-    quote: 'Their genetic selection really shows — growth rates and litter sizes have improved noticeably since I switched to DALFAM stock.',
+    quote: 'Their genetic selection really shows growth rates and litter sizes have improved noticeably since I switched to DALFAM stock.',
     name: 'Farmer Name',
     role: 'Pig Farmer, Dodoma',
   },
@@ -111,7 +111,7 @@ const BREEDING_FAQS = [
 const BREEDING_FARM_LOCATION = {
   name: 'Breeding Farm',
   address: 'Morogoro Region, Tanzania',
-  phone: '+255 XXX XXX XXX',
+  phone: '+255 718 258 199',
 };
 const COMPANY_EMAIL = 'info@dalfam.co.tz';
 
@@ -258,35 +258,36 @@ export default function PigBreeding() {
       <Navbar active="Pig Breeding" />
 
       {/* Page hero */}
-      <section className="relative text-white overflow-hidden min-h-[360px] md:min-h-[420px] flex items-center bg-dalfam-dark">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${HERO_IMAGE}')` }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(180deg, rgba(234, 243, 241, 0.85) 0%, rgba(18,36,31,0.6) 50%, rgba(18,36,31,0.92) 100%)',
-          }}
-        />
+<section className="relative text-white overflow-hidden min-h-[360px] md:min-h-[420px] flex items-center">
+  {/* Image only: no overlay, no tint, no opacity, no background color */}
+  <img
+    src={HERO_IMAGE}
+    alt="DALFAM Pig Breeding"
+    className="absolute inset-0 w-full h-full object-cover object-center"
+  />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 text-center w-full">
-          <h1 className="font-serif font-bold text-4xl sm:text-5xl">
-            DALFAM Pig Breeding
-          </h1>
-          <p className="mt-5 text-lg text-gray-200 max-w-2xl mx-auto">
-            Commercial breeding, genetic improvement and production support
-            that helps Tanzanian farmers build healthy, market-ready herds.
-          </p>
-          <Link
-            to="/contact"
-            className="inline-block mt-8 px-6 py-3 rounded-md bg-dalfam-gold text-dalfam-dark font-semibold hover:bg-yellow-500 transition-colors"
-          >
-            Request Breeding Stock
-          </Link>
-        </div>
-      </section>
+  <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 text-center w-full">
+    <h1
+      className="font-serif font-bold text-4xl sm:text-5xl"
+      style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}
+    >
+      DALFAM Pig Breeding
+    </h1>
+    <p
+      className="mt-5 text-lg text-white max-w-2xl mx-auto"
+      style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}
+    >
+      Commercial breeding, genetic improvement and production support
+      that helps Tanzanian farmers build healthy, market-ready herds.
+    </p>
+    <Link
+      to="/contact"
+      className="inline-block mt-8 px-6 py-3 rounded-md bg-dalfam-gold text-dalfam-dark font-semibold shadow-lg hover:bg-yellow-500 transition-colors"
+    >
+      Request Breeding Stock
+    </Link>
+  </div>
+</section>
 
       {/* Services */}
       <section className="max-w-6xl mx-auto px-6 lg:px-10 py-16">
@@ -479,25 +480,48 @@ export default function PigBreeding() {
       </section>
 
       {/* Gallery */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-3 text-center">
-          Life On The Breeding Farm
-        </h2>
-        <p className="text-black text-center max-w-2xl mx-auto mb-12">
-          A look at our herds, facilities and the farmers we train and
-          support.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {BREEDING_GALLERY.map((g) => (
+<section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+  <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-3 text-center">
+    Life On The Breeding Farm
+  </h2>
+  <p className="text-black text-center max-w-2xl mx-auto mb-12">
+    A look at our herds, facilities and the farmers we train and
+    support.
+  </p>
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    {BREEDING_GALLERY.map((g, i) => {
+      // Hardcoded titles, matched to images by position
+      const title = [
+        'Our Healthy Herds',
+        'Modern Farm Facilities',
+        'Farmer Training & Support',
+      ][i] || g.alt;
+
+      return (
+        <figure
+          key={g.src}
+          className="rounded-lg border border-gray-200 overflow-hidden bg-white"
+        >
+          {/* Square image */}
+          <div className="aspect-square w-full">
             <ImageWithFallback
-              key={g.src}
               src={g.src}
-              alt={g.alt}
-              className="w-full h-52 rounded-lg"
+              alt={g.alt || title}
+              className="w-full h-full object-cover"
             />
-          ))}
-        </div>
-      </section>
+          </div>
+
+          {/* Hardcoded title */}
+          <figcaption className="px-3 py-3 text-center border-t border-gray-200">
+            <span className="block font-serif text-sm md:text-base font-semibold text-dalfam-dark leading-snug">
+              {title}
+            </span>
+          </figcaption>
+        </figure>
+      );
+    })}
+  </div>
+</section>
 
       {/* Testimonials */}
       <section className="bg-dalfam-dark text-white">
@@ -576,9 +600,7 @@ export default function PigBreeding() {
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              A Tanzanian enterprise building productive livestock systems and
-              memorable travel experiences — two industries, one standard of
-              quality.
+              A Tanzanian enterprise delivering quality livestock solutions and memorable travel experiences.
             </p>
           </div>
 
@@ -661,7 +683,7 @@ export default function PigBreeding() {
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-gray-400 text-center sm:text-left">
-              © {new Date().getFullYear()} DALFAM Company Ltd. Haki zote zimehifadhiwa.
+              © {new Date().getFullYear()} DALFAM Company Ltd. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               {SOCIAL_LINKS.map((s) => (

@@ -7,9 +7,9 @@ import Navbar, { NAV_LINKS } from '../components/Navbar';
 // EDITABLE CONTENT — kept the same values used across the site (About page)
 // so Contact and About stay in sync. Update here and mirror in About.jsx.
 // ---------------------------------------------------------------------------
-const COMPANY_PHONE_DISPLAY = '+255 750 458 107';
+const COMPANY_PHONE_DISPLAY = '+255 718 258 199';
 // WhatsApp needs the number without spaces/plus sign, with country code.
-const COMPANY_WHATSAPP_NUMBER = '255750458107';
+const COMPANY_WHATSAPP_NUMBER = '255 718 258 199';
 const COMPANY_EMAIL = 'info@dalfam.co.tz';
 const COMPANY_LOCATION = 'Mbeya, Tanzania';
 
@@ -69,7 +69,7 @@ export default function Contact() {
         className="text-white"
         style={{
           background:
-            'linear-gradient(180deg, rgba(18,36,31,0.94) 0%, rgba(47,74,60,0.9) 100%)',
+            'linear-gradient(180deg, rgba(68, 122, 107, 0.94) 0%, rgba(84, 133, 108, 0.9) 100%)',
         }}
       >
         <div className="max-w-5xl mx-auto px-6 py-20 text-center">
@@ -258,9 +258,7 @@ export default function Contact() {
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              A Tanzanian enterprise building productive livestock systems and
-              memorable travel experiences — two industries, one standard of
-              quality.
+           A Tanzanian enterprise delivering quality livestock solutions and memorable travel experiences.
             </p>
           </div>
 

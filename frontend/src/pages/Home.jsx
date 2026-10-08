@@ -1,21 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar, { NAV_LINKS } from '../components/Navbar';
-import tourismImage from '../assets/tourism-hero.jpg';
+// ---------------------------------------------------------------------------
+// HOME PAGE IMAGES — every image on this page has its OWN entry below.
+// Nothing here is shared with the hero image or with the other pages, so you
+// can change any one of them without affecting the rest.
+// Files live in: frontend/public/images/  (reference them as '/images/<file>')
+// ---------------------------------------------------------------------------
+const HOME_IMAGES = {
+  // Top hero banner (background)
+  hero: '/images/hero.PNG',
 
-// CHANGE THIS PATH if you name your image file differently.
-// Put the actual image file at: frontend/public/images/hero.jpg
-const HERO_IMAGE = '/images/hero.svg';
+  // "What We Do" cards
+  pigBreedingCard: '/images/hero-pig-breeding.jpg',
+  tourismCard: '/images/tourism-hero.jpg',
 
-// Images used in the "What We Do" and blog preview cards below.
-const PIG_BREEDING_IMAGE = '/images/hero-pig-breeding.jpg';
-const TOURISM_IMAGE = tourismImage;
+  // "From Our Blog" preview cards (one image per post)
+  blogPost1: '/images/gallery-2.jpg',
+  blogPost2: '/images/twiga.PNG',
+  blogPost3: '/images/gallery-3.jpg',
+};
 
 // Snapshot numbers shown in the stats strip. Edit these to match real figures.
 
 // Footer / contact details — keep in sync with the other pages.
-const COMPANY_PHONE_DISPLAY = '+255 750 458 107';
-const COMPANY_WHATSAPP_NUMBER = '255750458107';
+const COMPANY_PHONE_DISPLAY = '+255 718 258 199';
+const COMPANY_WHATSAPP_NUMBER = '255 718 258 199';
 const COMPANY_EMAIL = 'info@dalfam.co.tz';
 const COMPANY_LOCATION = 'Mbeya, Tanzania';
 const WHATSAPP_DEFAULT_MESSAGE =
@@ -71,19 +81,19 @@ const BLOG_PREVIEW = [
     title: 'Choosing the Right Breeding Stock for Your Farm',
     excerpt: 'A practical look at what to check before you bring new pigs onto your land.',
     tag: 'Pig Breeding',
-    image: '/images/hero-pig-breeding.jpg',
+    image: HOME_IMAGES.blogPost1,
   },
   {
     title: 'Five Tanzanian Trails Worth the Hike',
     excerpt: 'From highland forests to lakeshore paths, a guide to our favourite nature routes.',
     tag: 'Tourism',
-    image: tourismImage,
+    image: HOME_IMAGES.blogPost2,
   },
   {
     title: 'Biosecurity Basics Every Farmer Should Know',
     excerpt: 'Simple, affordable habits that protect your herd from disease year-round.',
     tag: 'Pig Breeding',
-    image: '/images/hero-pig-breeding.jpg',
+    image: HOME_IMAGES.blogPost3,
   },
 ];
 
@@ -96,55 +106,60 @@ export default function Home() {
     <div className="min-h-screen bg-dalfam-cream">
       <Navbar active="Home" />
 
-      {/* Hero */}
-      <section className="relative text-white overflow-hidden min-h-[320px] md:min-h-[400px] flex items-center bg-dalfam-dark">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${HERO_IMAGE}')` }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(180deg, rgba(18,36,31,0.75) 0%, rgba(18,36,31,0.55) 45%, rgba(18,36,31,0.85) 100%)',
-          }}
-        />
+  {/* Hero */}
+<section className="relative overflow-hidden min-h-[320px] md:min-h-[400px] flex items-center">
+  {/* Image only — no color overlay */}
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 py-14 md:py-16 text-center w-full">
-          <span className="inline-block text-xs tracking-widest text-dalfam-gold font-semibold mb-4">
-            DALFAM COMPANY LTD &middot; TANZANIA
-          </span>
-          <h1 className="font-serif font-bold text-4xl sm:text-5xl md:text-6xl leading-tight">
-            Together for a Greater Tomorrow
-          </h1>
-          <p className="mt-6 text-lg text-gray-200 max-w-2xl mx-auto">
-            A diversified Tanzanian enterprise building productive livestock
-            systems and memorable travel experiences — two industries, one
-            standard of quality.
-          </p>
+ <img
+  src={HOME_IMAGES.hero}
+  alt="DALFAM"
+ className="absolute inset-0 w-full h-full object-cover object-[center_75%]"
+/>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/pig-breeding"
-              className="px-6 py-3 rounded-md bg-dalfam-gold text-dalfam-dark font-semibold hover:bg-yellow-500 transition-colors"
-            >
-              Pig Breeding
-            </Link>
-            <Link
-              to="/tourism"
-              className="px-6 py-3 rounded-md border border-white text-white font-semibold hover:bg-white hover:text-dalfam-dark transition-colors"
-            >
-              Tourism
-            </Link>
-            <Link
-              to="/contact"
-              className="px-6 py-3 rounded-md border border-white/40 text-white font-semibold hover:border-white transition-colors"
-            >
-              Contact Us
-            </Link>
-          </div>
-        </div>
-      </section>
+  <div className="relative z-10 max-w-5xl mx-auto px-6 py-14 md:py-16 text-center w-full text-white">
+    <span
+      className="inline-block text-xs tracking-widest text-dalfam-gold font-semibold mb-4"
+      style={{ textShadow: '0 1px 4px rgba(0,0,0,0.7)' }}
+    >
+      DALFAM COMPANY LTD &middot; TANZANIA
+    </span>
+
+    <h1
+      className="font-serif font-bold text-4xl sm:text-5xl md:text-6xl leading-tight"
+      style={{ textShadow: '0 2px 10px rgba(0,0,0,0.7)' }}
+    >
+      Together for a Greater Tomorrow
+    </h1>
+
+    <p
+      className="mt-6 text-lg text-white max-w-2xl mx-auto"
+      style={{ textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}
+    >
+      A diversified Tanzanian enterprise delivering quality livestock systems and exceptional travel experiences.
+    </p>
+
+    <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <Link
+        to="/pig-breeding"
+        className="px-6 py-3 rounded-md bg-dalfam-gold text-dalfam-dark font-semibold shadow-lg hover:bg-yellow-500 transition-colors"
+      >
+        Pig Breeding
+      </Link>
+      <Link
+        to="/tourism"
+        className="px-6 py-3 rounded-md border border-white text-white font-semibold shadow-lg hover:bg-white hover:text-dalfam-dark transition-colors"
+      >
+        Tourism
+      </Link>
+      <Link
+        to="/contact"
+        className="px-6 py-3 rounded-md border border-white/60 text-white font-semibold shadow-lg hover:border-white transition-colors"
+      >
+        Contact Us
+      </Link>
+    </div>
+  </div>
+</section>
 
       {/* Stats strip */}
       <section className="bg-dalfam-green text-white">
@@ -190,14 +205,14 @@ export default function Home() {
             What We Do
           </h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
-            Two divisions, each run by people who know their craft — working
-            together under one company.
+          Two specialized divisions, united under one company and driven by expertise, quality, and shared standards.
+
           </p>
 
           <div className="grid gap-8 md:grid-cols-2">
             <div className="rounded-lg border border-gray-200 overflow-hidden">
               <img
-                src={PIG_BREEDING_IMAGE}
+                src={HOME_IMAGES.pigBreedingCard}
                 alt="DALFAM Pig Breeding"
                 className="w-full h-56 object-cover"
               />
@@ -229,7 +244,7 @@ export default function Home() {
 
             <div className="rounded-lg border border-gray-200 overflow-hidden">
               <img
-                src={TOURISM_IMAGE}
+                src={HOME_IMAGES.tourismCard}
                 alt="DALFAM Tourism"
                 className="w-full h-56 object-cover"
               />
@@ -300,54 +315,63 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Blog preview */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-dalfam-dark">
-            From Our Blog
-          </h2>
+{/* Blog preview */}
+<section className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <div className="flex items-center justify-between mb-10">
+    <h2 className="font-serif text-2xl md:text-3xl font-bold text-dalfam-dark">
+      From Our Blog
+    </h2>
+    <Link
+      to="/blog"
+      className="text-sm text-dalfam-green font-medium hover:text-dalfam-gold transition-colors hidden sm:inline-block"
+    >
+      View all posts &rarr;
+    </Link>
+  </div>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
+    {BLOG_PREVIEW.map((post) => (
+      <div
+        key={post.title}
+        className="bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col w-full"
+      >
+        {/* Square image */}
+        <div className="aspect-square w-full">
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="p-6 flex flex-col flex-1">
+          <span className="text-xs tracking-widest text-dalfam-gold font-semibold mb-3">
+            {post.tag.toUpperCase()}
+          </span>
+          <h3 className="font-serif text-lg font-bold text-dalfam-dark mb-2">
+            {post.title}
+          </h3>
+          <p className="text-black text-sm leading-relaxed flex-1">
+            {post.excerpt}
+          </p>
           <Link
             to="/blog"
-            className="text-sm text-dalfam-green font-medium hover:text-dalfam-gold transition-colors hidden sm:inline-block"
+            className="inline-block mt-5 text-dalfam-green font-medium hover:text-dalfam-gold transition-colors"
           >
-            View all posts &rarr;
+            Read more &rarr;
           </Link>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {BLOG_PREVIEW.map((post) => (
-            <div key={post.title} className="bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-44 object-cover"
-              />
-              <div className="p-6 flex flex-col flex-1">
-                <span className="text-xs tracking-widest text-dalfam-gold font-semibold mb-3">
-                  {post.tag.toUpperCase()}
-                </span>
-                <h3 className="font-serif text-lg font-bold text-dalfam-dark mb-2">
-                  {post.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-1">
-                  {post.excerpt}
-                </p>
-                <Link
-                  to="/blog"
-                  className="inline-block mt-5 text-dalfam-green font-medium hover:text-dalfam-gold transition-colors"
-                >
-                  Read more &rarr;
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-        <Link
-          to="/blog"
-          className="mt-8 inline-block sm:hidden text-sm text-dalfam-green font-medium hover:text-dalfam-gold transition-colors"
-        >
-          View all posts &rarr;
-        </Link>
-      </section>
+      </div>
+    ))}
+  </div>
+
+  <Link
+    to="/blog"
+    className="mt-8 inline-block sm:hidden text-sm text-dalfam-green font-medium hover:text-dalfam-gold transition-colors"
+  >
+    View all posts &rarr;
+  </Link>
+</section>
 
       {/* Final CTA */}
       <section className="bg-dalfam-dark text-white">
@@ -356,9 +380,8 @@ export default function Home() {
             Let's Work Together
           </h2>
           <p className="text-gray-300 mb-8 max-w-xl mx-auto">
-            Whether you're a farmer looking for quality breeding stock or a
-            traveller planning your next trip to Tanzania, DALFAM is ready to
-            help.
+            From quality breeding stock to unforgettable Tanzanian travel experiences, DALFAM provides trusted solutions for farmers and travellers.
+
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
@@ -391,9 +414,8 @@ export default function Home() {
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              A Tanzanian enterprise building productive livestock systems and
-              memorable travel experiences — two industries, one standard of
-              quality.
+             A Tanzanian enterprise delivering quality livestock solutions and memorable travel experiences.
+
             </p>
           </div>
 

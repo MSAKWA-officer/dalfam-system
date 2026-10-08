@@ -9,7 +9,7 @@ const VALUES = [
   },
   {
     title: 'Integrity',
-    text: 'We deal honestly with farmers, partners and visitors — fair prices, clear records, no shortcuts.',
+    text: 'We deal honestly with farmers, partners and visitors  fair prices, clear records, no shortcuts.',
   },
   {
     title: 'Community',
@@ -27,14 +27,22 @@ const VALUES = [
 // names referenced below, or edit the paths to match your own file names.
 // ---------------------------------------------------------------------------
 
-// The company founder's photo. File: frontend/public/images/founder.jpg
-const FOUNDER_IMAGE = '/images/founder.jpg';
-
-const FOUNDER = {
-  name: 'Founder Name',
-  role: 'Founder & Chief Executive Officer',
-  bio: "DALFAM was founded to bring reliable, quality breeding stock to Tanzanian farmers while sharing the country's nature and culture with the world through thoughtful travel. Under this leadership, DALFAM has grown from a small breeding operation into a trusted name across livestock and tourism.",
-};
+// Founders' photos. Files: frontend/public/images/founder.jpeg and
+// frontend/public/images/faidha.jpeg
+const FOUNDERS = [
+  {
+    name: 'DAVIS JOHN BILA',
+    role: 'Founder and Chief Executive Officer',
+    image: '/images/founder.jpeg',
+    bio: "DALFAM was founded to bring reliable, quality breeding stock to Tanzanian farmers while sharing the country's nature and culture with the world through thoughtful travel. Under this leadership, DALFAM has grown from a small breeding operation into a trusted name across livestock and tourism.",
+  },
+  {
+    name: 'FAIDHA LUCAS GUNDA',
+    role: 'Founder, Managing Director and Chief Operating Officer',
+    image: '/images/faidha.jpeg',
+    bio: "As co-founder, Managing Director and Chief Operating Officer, Faidha leads DALFAM's day-to-day operations, ensuring both the breeding and tourism divisions run with quality, discipline and care for the people and communities they serve.",
+  },
+];
 
 // Current leadership team.
 const LEADERSHIP_TEAM = [
@@ -83,18 +91,18 @@ const DEPARTMENTS = [
 
 // Certifications, licenses and organisational memberships.
 const CERTIFICATIONS = [
-  'Registered Company — Tanzania Business Registration and Licensing Agency (BRELA)',
-  'Livestock Breeding License — Ministry of Livestock and Fisheries',
-  'Tourism Operator License — Tanzania Tourist Board',
-  'Member — Tanzania Pig Farmers Association',
+  'Registered Company; Tanzania Business Registration and Licensing Agency (BRELA)',
+  'Livestock Breeding License; Ministry of Livestock and Fisheries',
+  'Tourism Operator License; Tanzania Tourist Board',
+  'Member; Tanzania Pig Farmers Association',
 ];
 
 // Partner organisations. Replace image with a real logo path when available.
 const PARTNERS = [
-  { name: 'Partner Organisation 1', image: '/images/partner-1.png' },
-  { name: 'Partner Organisation 2', image: '/images/partner-2.png' },
-  { name: 'Partner Organisation 3', image: '/images/partner-3.png' },
-  { name: 'Partner Organisation 4', image: '/images/partner-4.png' },
+  { name: 'Partner Organisation 1', image: '/images/partner-1.jpg' },
+  { name: 'Partner Organisation 2', image: '/images/partner-2.jpg' },
+  { name: 'Partner Organisation 3', image: '/images/partner-3.jpg' },
+  { name: 'Partner Organisation 4', image: '/images/partner-4.jpg' },
 ];
 
 // Gallery photos of farms, animals and tourism experiences.
@@ -131,9 +139,9 @@ const COMPANY_EMAIL = 'info@dalfam.co.tz';
 
 // Company locations / branches.
 const LOCATIONS = [
-  { name: 'Head Office', address: 'Dar es Salaam, Tanzania', phone: '+255 XXX XXX XXX' },
-  { name: 'Breeding Farm', address: 'Morogoro Region, Tanzania', phone: '+255 XXX XXX XXX' },
-  { name: 'Tourism Office', address: 'Arusha, Tanzania', phone: '+255 XXX XXX XXX' },
+  { name: 'Head Office', address: 'Dar es Salaam, Tanzania', phone: ' +255 718 258 199' },
+  { name: 'Breeding Farm', address: 'Morogoro Region, Tanzania', phone: ' +255 718 258 199' },
+  { name: 'Tourism Office', address: 'Arusha, Tanzania', phone: ' +255 718 258 199' },
 ];
 
 // Awards and recognition.
@@ -150,7 +158,7 @@ const FAQS = [
   },
   {
     q: 'Do you sell breeding stock outside Tanzania?',
-    a: 'Our primary focus is supporting Tanzanian farmers, but we are open to regional enquiries — please contact us to discuss.',
+    a: 'Our primary focus is supporting Tanzanian farmers, but we are open to regional enquiries please contact us to discuss.',
   },
   {
     q: 'Can I visit a DALFAM farm as a tourist?',
@@ -222,6 +230,7 @@ function PersonPhoto({ src, alt, className = '' }) {
       src={src}
       alt={alt}
       className={`object-cover ${className}`}
+      style={{ objectPosition: 'center top' }}
       onError={() => setFailed(true)}
     />
   );
@@ -268,15 +277,15 @@ export default function About() {
         className="text-white"
         style={{
           background:
-            'linear-gradient(180deg, rgba(18,36,31,0.94) 0%, rgba(47,74,60,0.9) 100%)',
+            'linear-gradient(180deg, rgba(62, 110, 97, 0.94) 0%, rgba(63, 107, 84, 0.9) 100%)',
         }}
       >
         <div className="max-w-5xl mx-auto px-6 py-20 text-center">
           <h1 className="font-serif font-bold text-4xl sm:text-5xl">About Us</h1>
           <p className="mt-5 text-lg text-gray-200 max-w-2xl mx-auto">
-            DALFAM Company Ltd is a Tanzanian enterprise built on two things
-            we believe belong together: disciplined livestock production and
-            memorable travel experiences.
+           DALFAM Company Ltd is a Tanzanian enterprise focused on quality 
+           livestock production and memorable travel experiences
+
           </p>
         </div>
       </section>
@@ -296,7 +305,7 @@ export default function About() {
               both.
             </p>
             <p className="text-black leading-relaxed mb-4">
-              On the livestock side, we focus on commercial pig breeding —
+              On the livestock side, we focus on commercial pig breeding
               genetic improvement, herd health and biosecurity, and
               production support that helps farmers build sustainable,
               market-ready herds.
@@ -314,7 +323,7 @@ export default function About() {
             </h3>
             <p className="text-black text-sm leading-relaxed mb-5">
               To build productive, sustainable livestock systems and deliver
-              travel experiences that leave a lasting, positive impact —
+              travel experiences that leave a lasting, positive impact
               for our clients, our partners and our communities.
             </p>
             <h3 className="font-serif text-lg font-bold text-dalfam-dark mb-3">
@@ -368,28 +377,28 @@ export default function About() {
         </div>
       </section>
 
-      {/* Founder */}
+      {/* Founders */}
       <section className="max-w-5xl mx-auto px-6 lg:px-10 py-16">
-        <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-10 text-center">
-          Meet Our Founder
+        <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-12 text-center">
+          Meet Our Founders
         </h2>
-        <div className="grid md:grid-cols-3 gap-10 items-center">
-          <div className="md:col-span-1 flex justify-center">
-            <PersonPhoto
-              src={FOUNDER_IMAGE}
-              alt={FOUNDER.name}
-              className="w-48 h-48 sm:w-56 sm:h-56 rounded-full border-4 border-dalfam-gold/30"
-            />
-          </div>
-          <div className="md:col-span-2 text-center md:text-left">
-            <h3 className="font-serif text-xl font-bold text-dalfam-dark">
-              {FOUNDER.name}
-            </h3>
-            <p className="text-sm tracking-widest text-dalfam-gold font-semibold mb-4">
-              {FOUNDER.role.toUpperCase()}
-            </p>
-            <p className="text-black leading-relaxed">{FOUNDER.bio}</p>
-          </div>
+        <div className="grid md:grid-cols-2 gap-12 md:gap-10">
+          {FOUNDERS.map((f) => (
+            <div key={f.name} className="flex flex-col items-center text-center">
+              <PersonPhoto
+                src={f.image}
+                alt={f.name}
+                className="w-48 h-48 sm:w-56 sm:h-56 rounded-full border-4 border-dalfam-gold/30"
+              />
+              <h3 className="font-serif text-xl font-bold text-dalfam-dark mt-6">
+                {f.name}
+              </h3>
+              <p className="text-sm tracking-widest text-dalfam-gold font-semibold mt-1 mb-4">
+                {f.role.toUpperCase()}
+              </p>
+              <p className="text-black leading-relaxed">{f.bio}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -463,101 +472,137 @@ export default function About() {
         </div>
       </section>
 
-      {/* Certifications & partnerships */}
-      <section className="bg-white border-y border-gray-200">
-        <div className="max-w-6xl mx-auto px-6 lg:px-10 py-16">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-6">
-                Certifications & Licenses
-              </h2>
-              <ul className="space-y-3">
-                {CERTIFICATIONS.map((c) => (
-                  <li key={c} className="flex items-start gap-3 text-sm text-black">
-                    <svg
-                      width="18" height="18" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" strokeWidth="2"
-                      className="text-dalfam-gold flex-shrink-0 mt-0.5"
-                    >
-                      <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
-                      <circle cx="12" cy="12" r="9" />
-                    </svg>
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-6">
-                Our Partners
-              </h2>
-              <div className="grid grid-cols-2 gap-6">
-                {PARTNERS.map((p) => (
-                  <div
-                    key={p.name}
-                    className="rounded-lg border border-gray-200 p-4 flex items-center justify-center h-20"
-                  >
-                    <ImageWithFallback
-                      src={p.image}
-                      alt={p.name}
-                      className="max-h-full max-w-full"
-                      iconSize="30%"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-3 text-center">
-          Our Farms & Experiences
+{/* Certifications & partnerships */}
+<section className="bg-white border-y border-gray-200">
+  <div className="max-w-6xl mx-auto px-6 lg:px-10 py-16">
+    <div className="grid md:grid-cols-2 gap-12">
+      <div>
+        <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-6">
+          Certifications &amp; Licenses
         </h2>
-        <p className="text-black text-center max-w-2xl mx-auto mb-12">
-          A look at DALFAM's breeding operations and the tourism experiences
-          we host across Tanzania.
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {GALLERY.map((g) => (
-            <ImageWithFallback
-              key={g.src}
-              src={g.src}
-              alt={g.alt}
-              className="w-full h-40 sm:h-52 rounded-lg"
-            />
+        <ul className="space-y-3">
+          {CERTIFICATIONS.map((c) => (
+            <li key={c} className="flex items-start gap-3 text-sm text-black">
+              <svg
+                width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2"
+                className="text-dalfam-gold flex-shrink-0 mt-0.5"
+              >
+                <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="12" cy="12" r="9" />
+              </svg>
+              {c}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-6">
+          Our Partners
+        </h2>
+        <div className="grid grid-cols-2 gap-6">
+          {[
+            'Real Estate & Urban Development',
+            'Aquaculture & Fisheries',
+            'Tourism & Hospitality',
+            'Livestock & Pig Farming',
+          ].map((title, i) => (
+            <figure
+              key={title}
+              className="rounded-lg border border-gray-200 overflow-hidden bg-white"
+            >
+              {/* Square image (taken from PARTNERS by position) */}
+              <div className="aspect-square w-full">
+                <ImageWithFallback
+                  src={PARTNERS[i]?.image}
+                  alt={title}
+                  className="w-full h-full object-cover"
+                  iconSize="30%"
+                />
+              </div>
+
+              {/* Hardcoded title */}
+              <figcaption className="px-3 py-3 text-center border-t border-gray-200">
+                <span className="block font-serif text-sm md:text-base font-semibold text-dalfam-dark leading-snug">
+                  {title}
+                </span>
+              </figcaption>
+            </figure>
           ))}
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-      {/* Testimonials */}
-      <section className="bg-dalfam-dark text-white">
-        <div className="max-w-6xl mx-auto px-6 lg:px-10 py-16">
-          <h2 className="font-serif text-2xl font-bold mb-12 text-center">
-            What People Say
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {TESTIMONIALS.map((t) => (
-              <div
-                key={t.name + t.role}
-                className="bg-white/5 border border-white/10 rounded-lg p-6"
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="text-dalfam-gold mb-4">
-                  <path d="M7 11c0-3 2-5 5-5v2c-1.7 0-3 1.3-3 3h3v6H7v-6zm9 0c0-3 2-5 5-5v2c-1.7 0-3 1.3-3 3h3v6h-5v-6z" />
-                </svg>
-                <p className="text-gray-200 text-sm leading-relaxed mb-5">
-                  {t.quote}
-                </p>
-                <p className="font-serif font-bold text-white text-sm">{t.name}</p>
-                <p className="text-xs text-gray-400">{t.role}</p>
-              </div>
-            ))}
-          </div>
+     {/* Gallery */}
+<section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+  <h2 className="font-serif text-2xl font-bold text-dalfam-dark mb-3 text-center">
+    Our Farms &amp; Experiences
+  </h2>
+  <p className="text-black text-center max-w-2xl mx-auto mb-12">
+    A look at DALFAM's breeding operations and the tourism experiences
+    we host across Tanzania.
+  </p>
+  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+    {[
+      'Breeding Pens',
+      'Piglets at the Farm',
+      'Feeding & Care',
+      'Safari Experience',
+      'Coastal Getaway',
+      'Guest Hospitality',
+    ].map((title, i) => (
+      <figure
+        key={title}
+        className="rounded-lg border border-gray-200 overflow-hidden bg-white"
+      >
+        {/* Square image (taken from GALLERY by position) */}
+        <div className="aspect-square w-full">
+          <ImageWithFallback
+            src={GALLERY[i]?.src}
+            alt={GALLERY[i]?.alt || title}
+            className="w-full h-full object-cover"
+          />
         </div>
-      </section>
+
+        {/* Hardcoded title */}
+        <figcaption className="px-3 py-3 text-center border-t border-gray-200">
+          <span className="block font-serif text-sm md:text-base font-semibold text-dalfam-dark leading-snug">
+            {title}
+          </span>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+</section>
+
+{/* Testimonials */}
+<section className="bg-dalfam-dark text-white">
+  <div className="max-w-6xl mx-auto px-6 lg:px-10 py-16">
+    <h2 className="font-serif text-2xl font-bold mb-12 text-center">
+      What People Say
+    </h2>
+    <div className="grid md:grid-cols-3 gap-8">
+      {TESTIMONIALS.map((t) => (
+        <div
+          key={t.name + t.role}
+          className="bg-white/5 border border-white/10 rounded-lg p-6"
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="text-dalfam-gold mb-4">
+            <path d="M7 11c0-3 2-5 5-5v2c-1.7 0-3 1.3-3 3h3v6H7v-6zm9 0c0-3 2-5 5-5v2c-1.7 0-3 1.3-3 3h3v6h-5v-6z" />
+          </svg>
+          <p className="text-gray-200 text-sm leading-relaxed mb-5">
+            {t.quote}
+          </p>
+          <p className="font-serif font-bold text-white text-sm">{t.name}</p>
+          <p className="text-xs text-gray-400">{t.role}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Locations */}
       <section className="max-w-6xl mx-auto px-6 lg:px-10 py-16">
@@ -657,9 +702,7 @@ export default function About() {
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              A Tanzanian enterprise building productive livestock systems and
-              memorable travel experiences — two industries, one standard of
-              quality.
+              A Tanzanian enterprise delivering quality livestock solutions and memorable travel experiences.
             </p>
           </div>
 
@@ -742,7 +785,7 @@ export default function About() {
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-gray-400 text-center sm:text-left">
-              © {new Date().getFullYear()} DALFAM Company Ltd. Haki zote zimehifadhiwa.
+              © {new Date().getFullYear()} DALFAM Company Ltd. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               {SOCIAL_LINKS.map((s) => (

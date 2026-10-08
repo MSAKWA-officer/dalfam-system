@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import { formatDate, getAssetUrl } from '../utils/format';
@@ -8,9 +8,9 @@ import Navbar, { NAV_LINKS } from '../components/Navbar';
 // EDITABLE CONTENT — kept the same values used across the site (Contact/About
 // pages) so the footer stays in sync. Update here and mirror there too.
 // ---------------------------------------------------------------------------
-const COMPANY_PHONE_DISPLAY = '+255 750 458 107';
+const COMPANY_PHONE_DISPLAY = ' +255 718 258 199';
 // WhatsApp needs the number without spaces/plus sign, with country code.
-const COMPANY_WHATSAPP_NUMBER = '255750458107';
+const COMPANY_WHATSAPP_NUMBER = ' 255 718 258 199';
 const COMPANY_EMAIL = 'info@dalfam.co.tz';
 const COMPANY_LOCATION = 'Mbeya, Tanzania';
 
@@ -74,10 +74,200 @@ function PostPhoto({ src, alt, className = '' }) {
   );
 }
 
+const clamp = (lines) => ({
+  display: '-webkit-box',
+  WebkitLineClamp: lines,
+  WebkitBoxOrient: 'vertical',
+  overflow: 'hidden',
+});
+
+function CategoryBadge({ category }) {
+  return (
+    <span className="text-[10px] uppercase tracking-wide font-semibold px-2.5 py-1 rounded-full bg-dalfam-green/10 text-dalfam-green">
+      {CATEGORY_LABELS[category] || category || 'General'}
+    </span>
+  );
+}
+
+function PostMeta({ post }) {
+  return (
+    <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
+      <CategoryBadge category={post.category} />
+      <span className="text-xs text-gray-600">
+        {formatDate(post.publishedAt || post.createdAt)}
+      </span>
+      <span className="text-xs text-gray-600">
+        &middot; {estimateReadingMinutes(post.content || post.excerpt)} min soma
+      </span>
+    </div>
+  );
+}
+
+const authorOf = (post) => post.author?.name || 'DALFAM Team';
+
+// Card: square image on top, details and description below.
+function PostCard({ post, onOpen }) {
+  return (
+    <article className="group bg-white rounded-xl border border-gray-200 overflow-hidden flex flex-col shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+      <button
+        type="button"
+        onClick={() => onOpen(post)}
+        className="block w-full aspect-square overflow-hidden bg-gray-100 text-left"
+        aria-label={`Read: ${post.title}`}
+      >
+        <PostPhoto
+          src={post.imageUrl ? getAssetUrl(post.imageUrl) : null}
+          alt={post.title}
+          className="w-full h-full group-hover:scale-105 transition-transform duration-500"
+        />
+      </button>
+
+      <div className="p-6 flex flex-col flex-1">
+        <PostMeta post={post} />
+
+        <h3
+          className="font-serif text-xl font-bold text-dalfam-dark mt-4 mb-3 leading-snug"
+          style={clamp(3)}
+        >
+          {post.title}
+        </h3>
+
+        <p className="text-black text-sm leading-relaxed flex-1" style={clamp(3)}>
+          {post.excerpt}
+        </p>
+
+        <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
+          <span className="text-sm text-gray-700">Na {authorOf(post)}</span>
+          <button
+            type="button"
+            onClick={() => onOpen(post)}
+            className="text-sm font-semibold text-dalfam-green hover:text-dalfam-gold transition-colors"
+          >
+            Read more &rarr;
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+// Large highlighted card for the newest article.
+function FeaturedPost({ post, onOpen }) {
+  return (
+    <article className="bg-white rounded-xl border border-gray-200 overflow-hidden grid md:grid-cols-2 shadow-sm">
+      <div className="aspect-square md:aspect-auto md:min-h-[420px] bg-gray-100">
+        <PostPhoto
+          src={post.imageUrl ? getAssetUrl(post.imageUrl) : null}
+          alt={post.title}
+          className="w-full h-full"
+        />
+      </div>
+      <div className="p-8 lg:p-12 flex flex-col justify-center">
+        <span className="text-xs tracking-widest font-semibold text-dalfam-gold mb-4">
+          FEATURED ARTICLE
+        </span>
+        <PostMeta post={post} />
+        <h3 className="font-serif text-2xl lg:text-3xl font-bold text-dalfam-dark mt-4 mb-4 leading-snug">
+          {post.title}
+        </h3>
+        <p className="text-black leading-relaxed mb-6" style={clamp(5)}>
+          {post.excerpt}
+        </p>
+        <div className="flex items-center gap-5">
+          <button
+            type="button"
+            onClick={() => onOpen(post)}
+            className="px-5 py-2.5 rounded-md bg-dalfam-green text-white text-sm font-semibold hover:bg-dalfam-dark transition-colors"
+          >
+            Soma makala
+          </button>
+          <span className="text-sm text-gray-700">Na {authorOf(post)}</span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+// Full article reader (opens in-page, so no extra route is needed).
+function PostModal({ post, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && onClose();
+    document.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-start sm:items-center justify-center bg-black/60 p-0 sm:p-6"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={post.title}
+    >
+      <div
+        className="relative bg-white w-full max-w-3xl max-h-full sm:max-h-[90vh] overflow-y-auto sm:rounded-xl shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 text-dalfam-dark shadow flex items-center justify-center hover:bg-dalfam-gold transition-colors"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+          </svg>
+        </button>
+
+        <div className="aspect-[16/9] w-full bg-gray-100">
+          <PostPhoto
+            src={post.imageUrl ? getAssetUrl(post.imageUrl) : null}
+            alt={post.title}
+            className="w-full h-full"
+          />
+        </div>
+        <div className="p-6 sm:p-10">
+          <PostMeta post={post} />
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-dalfam-dark mt-4 mb-2 leading-snug">
+            {post.title}
+          </h2>
+          <p className="text-sm text-gray-600 mb-6">Na {authorOf(post)}</p>
+          <div className="text-black leading-relaxed whitespace-pre-line">
+            {post.content || post.excerpt}
+          </div>
+          <div className="mt-8 pt-6 border-t border-gray-100 flex flex-wrap gap-4 items-center justify-between">
+            <button
+              type="button"
+              onClick={onClose}
+              className="text-sm font-semibold text-dalfam-green hover:text-dalfam-gold transition-colors"
+            >
+              &larr; Back to Articles
+            </button>
+            <Link
+              to="/contact"
+              className="px-5 py-2.5 rounded-md bg-dalfam-gold text-dalfam-dark text-sm font-semibold hover:bg-yellow-500 transition-colors"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Blog() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [query, setQuery] = useState('');
+  const [openPost, setOpenPost] = useState(null);
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -94,6 +284,37 @@ export default function Blog() {
     };
     loadPosts();
   }, []);
+
+  const categories = useMemo(() => {
+    const names = Object.keys(CATEGORY_LABELS);
+    posts.forEach((p) => {
+      const c = p.category || 'General';
+      if (!names.includes(c)) names.push(c);
+    });
+    return ['All', ...names.filter((n) => posts.some((p) => (p.category || 'General') === n))];
+  }, [posts]);
+
+  const countFor = (cat) =>
+    cat === 'All'
+      ? posts.length
+      : posts.filter((p) => (p.category || 'General') === cat).length;
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return posts.filter((p) => {
+      const matchCat = activeCategory === 'All' || (p.category || 'General') === activeCategory;
+      const matchQuery =
+        !q ||
+        (p.title || '').toLowerCase().includes(q) ||
+        (p.excerpt || '').toLowerCase().includes(q);
+      return matchCat && matchQuery;
+    });
+  }, [posts, activeCategory, query]);
+
+  // Featured = newest post, shown only on the unfiltered view.
+  const isDefaultView = activeCategory === 'All' && !query.trim();
+  const featured = isDefaultView && filtered.length > 2 ? filtered[0] : null;
+  const gridPosts = featured ? filtered.slice(1) : filtered;
 
   const whatsappHref = `https://wa.me/${COMPANY_WHATSAPP_NUMBER}?text=${encodeURIComponent(
     WHATSAPP_DEFAULT_MESSAGE
@@ -113,7 +334,7 @@ export default function Blog() {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(18,36,31,0.8) 0%, rgba(18,36,31,0.65) 45%, rgba(18,36,31,0.94) 100%)',
+              'linear-gradient(180deg, rgba(165, 242, 219, 0.8) 0%, rgba(44, 236, 178, 0.65) 45%, rgba(113, 223, 170, 0.94) 100%)',
           }}
         />
         <div className="relative z-10 max-w-5xl mx-auto px-6 py-16 text-center w-full">
@@ -125,14 +346,74 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Posts grid */}
+      {/* Articles */}
       <section className="max-w-6xl mx-auto px-6 lg:px-10 py-16">
+        {/* Section title */}
+        <div className="text-center mb-10">
+          <span className="text-xs tracking-widest font-semibold text-dalfam-gold">
+            DALFAM INSIGHTS
+          </span>
+          <h2 className="font-serif text-3xl font-bold text-dalfam-dark mt-2">
+            Latest Articles
+          </h2>
+          <div className="w-16 h-1 bg-dalfam-gold rounded mx-auto mt-4" />
+          <p className="text-black mt-4 max-w-2xl mx-auto">
+            Practical advice for farmers and inspiring stories for travellers,
+            written by the people who do the work.
+          </p>
+        </div>
+
+        {/* Filters + search */}
+        {!loading && !error && posts.length > 0 && (
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => {
+                const active = activeCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setActiveCategory(cat)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+                      active
+                        ? 'bg-dalfam-green text-white border-dalfam-green'
+                        : 'bg-white text-dalfam-dark border-gray-200 hover:border-dalfam-gold'
+                    }`}
+                  >
+                    {cat === 'All' ? 'All' : CATEGORY_LABELS[cat] || cat}
+                    <span className={`ml-2 text-xs ${active ? 'text-gray-200' : 'text-gray-500'}`}>
+                      {countFor(cat)}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="relative md:w-72">
+              <svg
+                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4.3-4.3" strokeLinecap="round" />
+              </svg>
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search articles..."
+                className="w-full pl-10 pr-4 py-2.5 rounded-full border border-gray-200 bg-white text-sm text-black focus:outline-none focus:border-dalfam-gold"
+              />
+            </div>
+          </div>
+        )}
+
         {loading && (
-          <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8">
-            {[1, 2].map((i) => (
-              <div key={i} className="rounded-lg border border-gray-200 overflow-hidden bg-white flex flex-col sm:flex-row animate-pulse">
-                <div className="w-full sm:w-2/5 h-56 sm:h-auto bg-gray-200" />
-                <div className="p-6 space-y-3 flex-1">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="rounded-xl border border-gray-200 overflow-hidden bg-white animate-pulse">
+                <div className="aspect-square bg-gray-200" />
+                <div className="p-6 space-y-3">
                   <div className="h-3 bg-gray-200 rounded w-1/3" />
                   <div className="h-5 bg-gray-200 rounded w-4/5" />
                   <div className="h-3 bg-gray-200 rounded w-full" />
@@ -145,64 +426,52 @@ export default function Blog() {
 
         {!loading && error && (
           <p className="text-center text-black">
-            Imeshindikana kupakia machapisho kwa sasa. Jaribu tena baadaye,
-            au{' '}
+           Unable to load posts at the moment. Please try again later,
+            or{' '}
             <Link to="/contact" className="text-dalfam-green font-medium hover:text-dalfam-gold">
-              wasiliana nasi
+              Call Us
             </Link>.
           </p>
         )}
 
         {!loading && !error && posts.length === 0 && (
           <p className="text-center text-black">
-            Hakuna machapisho bado. Rejea hapa hivi karibuni.
+            No posts yet. Please check back soon.
           </p>
         )}
 
-        {!loading && !error && posts.length > 0 && (
-          <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8">
-            {posts.map((post) => (
-              <article
-                key={post.id}
-                className="bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col sm:flex-row"
-              >
-                <PostPhoto
-                  src={post.imageUrl ? getAssetUrl(post.imageUrl) : null}
-                  alt={post.title}
-                  className="w-full sm:w-2/5 h-56 sm:h-auto flex-shrink-0"
-                />
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mb-3">
-                    <span className="text-[10px] uppercase tracking-wide font-semibold px-2 py-1 rounded-full bg-dalfam-green/10 text-dalfam-green">
-                      {CATEGORY_LABELS[post.category] || post.category || 'General'}
-                    </span>
-                    <span className="text-xs text-black">
-                      {formatDate(post.publishedAt || post.createdAt)}
-                    </span>
-                    <span className="text-xs text-black">
-                      &middot; {estimateReadingMinutes(post.content || post.excerpt)} min soma
-                    </span>
-                  </div>
+        {!loading && !error && posts.length > 0 && filtered.length === 0 && (
+          <div className="text-center py-10">
+            <p className="text-black mb-4">No articles match your search.</p>
+            <button
+              type="button"
+              onClick={() => {
+                setQuery('');
+                setActiveCategory('All');
+              }}
+              className="text-dalfam-green font-semibold hover:text-dalfam-gold"
+            >
+            Show all articles
+            </button>
+          </div>
+        )}
 
-                  <h2 className="font-serif text-xl font-bold text-dalfam-dark mb-3 leading-snug">
-                    {post.title}
-                  </h2>
+        {!loading && !error && featured && (
+          <div className="mb-10">
+            <FeaturedPost post={featured} onOpen={setOpenPost} />
+          </div>
+        )}
 
-                  <p className="text-black text-sm leading-relaxed flex-1">
-                    {post.excerpt}
-                  </p>
-
-                  <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
-                    <span className="text-sm text-black">
-                      {post.author?.name ? `Na ${post.author.name}` : 'DALFAM Team'}
-                    </span>
-                  </div>
-                </div>
-              </article>
+        {!loading && !error && gridPosts.length > 0 && (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {gridPosts.map((post) => (
+              <PostCard key={post.id} post={post} onOpen={setOpenPost} />
             ))}
           </div>
         )}
       </section>
+
+      {openPost && <PostModal post={openPost} onClose={() => setOpenPost(null)} />}
 
       {/* CTA */}
       <section className="bg-white border-y border-gray-200">
@@ -211,7 +480,7 @@ export default function Blog() {
             Have a question for our team?
           </h2>
           <p className="text-black mb-8 max-w-xl mx-auto">
-            Reach out and we'll point you to the right resource — or write it
+            Reach out and we'll point you to the right resource or write it
             up in a future post.
           </p>
           <Link
@@ -237,9 +506,7 @@ export default function Blog() {
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              A Tanzanian enterprise building productive livestock systems and
-              memorable travel experiences — two industries, one standard of
-              quality.
+             A Tanzanian enterprise delivering quality livestock solutions and memorable travel experiences.
             </p>
           </div>
 
